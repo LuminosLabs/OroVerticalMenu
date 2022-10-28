@@ -4,7 +4,7 @@
   "type": "bundle",
   "autoload": {
     "psr-4": {
-      "Luminoslabs\\OroConfigurableProduct\\": "src/"
+      "Luminoslabs\\OroVerticalMenu\\": "src/"
     }
   },
   "authors": [
