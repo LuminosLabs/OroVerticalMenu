@@ -1,0 +1,19 @@
+{
+  "name": "luminoslabs/oro-vertical-menu",
+  "description": "oro-vertical-menu",
+  "type": "bundle",
+  "autoload": {
+    "psr-4": {
+      "Luminoslabs\\OroConfigurableProduct\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Urcan Nicolae",
+      "email": "nicolae.urcan@luminoslabs.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {}
+}

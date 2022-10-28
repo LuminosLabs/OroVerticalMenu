@@ -1,0 +1,2 @@
+bundles:
+  - { name: Luminoslabs\OroVerticalMenu\AppMenuBundle, priority: 1000 }

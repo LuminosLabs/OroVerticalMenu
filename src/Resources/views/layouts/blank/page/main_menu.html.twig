@@ -1,0 +1,151 @@
+{% block _vertical_main_menu_handler_widget %}
+    {% set attr =  layout_attr_defaults(attr, {'~class': ' dropdown-nav' ~ (app.request.attributes.get('_route') == 'oro_frontend_root' ? ' show' : '')}) %}
+
+    <div {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}
+
+{% block _vertical_web_catalog_menu_list_widget %}
+    {% set attr =  layout_attr_defaults(attr, {'~class': ' menu-area dropdown-content'}) %}
+
+    {{ block('_vertical_menu_anchor') }}
+
+    <ul {{ block('block_attributes') }}>
+        {{ block_widget(block) }}
+    </ul>
+{% endblock %}
+
+{% block _vertical_menu_anchor %}
+    <a href="{{ path('oro_catalog_frontend_product_allproducts') }}" class="main-menu__link dropbtn">{{ 'app.vertical_main_menu_handler.label'| trans }}</a>
+{% endblock %}
+
+{% block _vertical_web_catalog_menu_widget %}
+    {% if (max_size is not null ) %}
+        {% set categories = categories[0:max_size] %}
+    {%- endif %}
+    {% set categoriesAttr = layout_attr_defaults(attr, {
+        '~class': ' sidebar-menu-item'
+    }) %}
+    {% for category in categories -%}
+        {% set hasSublist = category.children is not empty %}
+        {% set categoryAttr = categoriesAttr %}
+
+        {% do block|merge_context({'category': category}) %}
+
+        {% for child in block -%}
+            {% if child.vars.visible %}
+                {{ block_widget(child, {attr: categoryAttr}) }}
+            {% endif %}
+        {%- endfor %}
+    {%- endfor %}
+{% endblock %}
+
+{% block _web_catalog_menu_item_mega_widget %}
+    {% set sub_block = '_web_catalog_menu_columns' %}
+    {{ block('_web_catalog_menu_link') }}
+{% endblock %}
+
+{% block _web_catalog_menu_link %}
+    <li {{ block('block_attributes') }}>
+        {% set hasSublist = category.children is not empty %}
+        {% set hasHeading = category.hasHeading %}
+        <a href="{{ oro_commercemenu_get_url(category.url) }}">
+            {{ category.label }}
+        </a>
+        {% if hasSublist %}
+            {{ block(sub_block) }}
+        {% endif %}
+    </li>
+{% endblock %}
+
+{% block _web_catalog_menu_columns %}
+    <div class="columns-content">
+        <div class="list-container">
+            {% do block|merge_context({'categories': category.children, 'hasHeading': hasHeading }) %}
+            {{ block('container_widget') }}
+        </div>
+    </div>
+{% endblock  %}
+
+{% block _web_catalog_menu_column_widget %}
+    {% if hasHeading %}
+    {% for category in categories %}
+        {% set hasSublist = category.children is not empty %}
+        {% set label = category.label %}
+        {% set content %}
+            {% if hasSublist %}
+                {% do block|merge_context({
+                    'categories': category.children
+                }) %}
+                {{ block('container_widget') }}
+            {% endif %}
+        {% endset %}
+        {{ block('_web_catalog_menu_column_item') }}
+    {% endfor %}
+    {% else %}
+        <div class="menu-column">
+            {{ block('container_widget') }}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block _web_catalog_menu_column_item %}
+    <div class="menu-column">
+        <p class="column-heading">
+            {{ label }}
+        </p>
+        {{ content }}
+    </div>
+{% endblock  %}
+
+{% block _web_catalog_menu_column_subitem_widget %}
+    <ul class="column-list">
+        {% for category in categories %}
+            {{ block('_web_catalog_menu_item') }}
+            {% set hasSublist = category.children is not empty %}
+            {% if hasSublist %}
+                {% do block|merge_context({'categories': category.children }) %}
+                {{ block('container_widget') }}
+            {% endif %}
+        {% endfor %}
+        {% if hasHeading %}
+            <li class="column-item"><a href="">Lorem ipsum</a></li>
+            <li class="column-item"><a href="">Lorem ipsum</a></li>
+            <li class="column-item"><a href="">Lorem ipsum</a></li>
+            <li class="column-item"><a href="">Lorem ipsum</a></li>
+            <li class="column-item"><a href="">Lorem ipsum</a></li>
+            <li class="column-item"><a href="">Lorem ipsum test</a></li>
+            <li class="column-item"><a href="">Lorem ipsum test</a></li>
+            <li class="column-item"><a href="">Lorem ipsum test</a></li>
+            <li class="column-item"><a href="">Lorem ipsum test</a></li>
+            <li class="column-item"><a href="">Lorem ipsum test</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block _web_catalog_menu_item %}
+    <li class="column-item">
+        <a href="{{ app.request.uriForPath(category.url) }}">{{ category.label }}</a>
+    </li>
+{% endblock %}
+
+{% block _web_catalog_menu_column_subitem_indent_widget %}
+    {% for category in categories %}
+        {{ block('_web_catalog_menu_column_subitem_indent') }}
+    {% endfor %}
+{% endblock %}
+
+{% block _web_catalog_menu_column_subitem_indent %}
+    <li class="column-item padding-item">
+        <a href="{{ app.request.uriForPath(category.url) }}">{{ category.label }}</a>
+    </li>
+{% endblock %}
+
+{% block _menu_placeholder_left_widget %}
+    {% set attr =  layout_attr_defaults(attr, {'~class': ' placeholder-left' ~ (app.request.attributes.get('_route') != 'oro_frontend_root' ? ' hidden' : '')}) %}
+    <div {{ block('block_attributes') }}>
+        &nbsp;
+        {{ block_widget(block) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Luminoslabs\OroVerticalMenu\:
+    resource: '../../*'
+    exclude: '../../{DependencyInjection,Entity}'
+
+  Luminoslabs\OroVerticalMenu\Listener\WebCatalogContentNodeView:
+    tags:
+      - { name: kernel.event_listener, event: "oro_ui.scroll_data.before.web-catalog-tree-edit", method: onContentNodeView }
+
+  oro_web_catalog.layout.data_provider.menu_data:
+    class: Luminoslabs\OroVerticalMenu\Layout\DataProvider\AppMenuDataProvider
+    arguments:
+      - '@doctrine'
+      - '@oro_web_catalog.web_catalog_provider'
+      - '@oro_web_catalog.content_node_tree_resolver'
+      - '@oro_locale.helper.localization'
+      - '@oro_web_catalog.request_web_content_scope_provider'
+      - '@oro_website.manager'
+    calls:
+      - [ setCache, [ '@oro_web_catalog.layout.data_provider.menu_data.cache' ] ]
+    tags:
+      - { name: layout.data_provider, alias: web_catalog_menu }
+
+  oro_web_catalog.content_node_tree_resolver:
+    class: Luminoslabs\OroVerticalMenu\ContentNodeUtils\AppContentNodeTreeResolver
+    arguments:
+      - '@oro_entity.doctrine_helper'
+      - '@oro_web_catalog.content_node_provider'
+      - '@oro_scope.scope_manager'
+
+  oro_web_catalog.content_node_tree_cache:
+    class: Luminoslabs\OroVerticalMenu\Cache\AppContentNodeTreeCache
+    arguments:
+      - '@oro_entity.doctrine_helper'
+      - '@oro_web_catalog.cache'

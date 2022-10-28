@@ -1,0 +1,7 @@
+app:
+  vertical_main_menu_handler.label: 'Products'
+  webcatalog:
+    contentnode:
+      has_heading:
+        label: 'Has Heading'
+        description: 'Enabling will display a heading in catalog menu'

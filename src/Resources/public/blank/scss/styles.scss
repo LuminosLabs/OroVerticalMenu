@@ -1,0 +1,114 @@
+.dropdown-nav {
+  position: relative;
+}
+
+.menu-area {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  width: 250px;
+  height: 396px;
+}
+
+.sidebar-menu-item {
+  padding: 0 0 8px 9px;
+}
+
+.dropdown-content .sidebar-menu-item a, .dropdown-content .column-item a {
+  color: #464646;
+}
+
+.menu-area .sidebar-menu-item > a {
+  text-align: left;
+  position: relative;
+  display: block;
+}
+
+.menu-area li .columns-content {
+  display: none;
+  z-index: 999;
+  top: 0;
+  position: absolute;
+  background-color: #fff;
+}
+
+.dropdown-nav:hover, .dropdown-nav.show {
+  background-color: #f5f5f5;
+}
+
+.menu-area li:hover > .columns-content {
+  display: block;
+  left: 250px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 49px;
+  z-index: 1;
+  padding: 15px 0 15px 15px;
+}
+
+.dropdown-nav:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-nav.show .dropdown-content {
+  display: block;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 1134px;
+  height: 396px;
+  padding: 15px;
+  overflow: hidden;
+  gap: 6px;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    flex-flow:column;
+
+    .column-heading {
+      background: white;
+      margin:0 0 15px 0;
+      white-space: nowrap; // keep columns at same height & alignment
+      text-transform: uppercase;
+      color: #b84926;
+    }
+
+    ul {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-rows: repeat(13, 19px); // how many items on each column and height for each item
+      grid-gap: 7px;
+      margin: 0;
+
+      li {
+        width: 218px;
+        list-style-type: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: "...";
+      }
+      .column-item.padding-item {
+        padding-left: 20px;
+      }
+    }
+  }
+}
+
+.placeholder-left {
+  width: 250px;
+  float: left;
+}
+
+.placeholder-right {
+  width: 1134px;
+  float: left;
+}

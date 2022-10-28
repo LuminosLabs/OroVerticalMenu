@@ -1,0 +1,39 @@
+layout:
+  actions:
+    - '@setBlockTheme':
+        themes: 'main_menu.html.twig'
+    - '@addTree':
+        items:
+          vertical_main_menu_handler:
+            blockType: container
+            prepend: true
+          vertical_web_catalog_menu_list:
+            blockType: container
+          vertical_web_catalog_menu:
+            blockType: category_list
+            options:
+              categories: '=data["web_catalog_menu"].getItems(4)'
+              max_size: 6
+          web_catalog_menu_item_mega:
+            blockType: menu_item
+          web_catalog_menu_column:
+            blockType: menu_item
+          web_catalog_menu_column_subitem:
+            blockType: menu_item
+          web_catalog_menu_column_subitem_indent:
+            blockType: menu_item
+        tree:
+          main_menu_container:
+            vertical_main_menu_handler:
+              vertical_web_catalog_menu_list:
+                vertical_web_catalog_menu:
+                  web_catalog_menu_item_mega:
+                    web_catalog_menu_column:
+                      web_catalog_menu_column_subitem:
+                        web_catalog_menu_column_subitem_indent: ~
+    - '@add':
+        id: menu_placeholder_left
+        blockType: container
+        siblingId: hero_promo
+        parentId: page_content
+        prepend: true
